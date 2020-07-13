@@ -12,6 +12,18 @@ def getConfig():
   except FileNotFoundError:
     FileNotFoundError: "Please provide a config.json"
 
+async def translate(message):
+    # if the message is in a normie language, ignore the message
+  if translator.detect(message.content).lang != 'ja':
+    return
+
+  # get an english translation
+  trans = translator.translate(message.content).text
+
+  # get romaji
+  romaji = translator.translate(message.content, dest='ja').pronunciation
+
+  await message.channel.send("Romaji: ```" + romaji + "```\n Translation: ```" + trans + "```")
 
 @client.event
 async def on_message(message):
@@ -23,17 +35,13 @@ async def on_message(message):
   if message.channel.id not in getConfig()["bound_channels"]:
     return
 
-  # if the message is in a normie language, ignore the message
-  if translator.detect(message.content).lang != 'ja':
+  if(message.content.startswith("?kanji ")):
+    await message.channel.send("https://hochanh.github.io/rtk/"+ message.content[7:] +"/index.html")
     return
 
-  # get an english translation
-  trans = translator.translate(message.content).text
 
-  # get romaji
-  romaji = translator.translate(message.content, dest='ja').pronunciation
 
-  await message.channel.send("Romaji: ```" + romaji + "```\n Translation: ```" + trans + "```")
+  await translate(message)
 
 TOKEN = getConfig()["token"]
 print("かんな〜ちゃん: スタート!")
