@@ -8,8 +8,9 @@ pylint = "*"
 rope = "*"
 
 [packages]
-googletrans = "*"
 discord-py = "*"
+pygoogletranslation = "*"
+langdetect = "*"
 
 [requires]
 python_version = "3"

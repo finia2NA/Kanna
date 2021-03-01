@@ -1,6 +1,7 @@
 import json
 import discord
-from googletrans import Translator
+from pygoogletranslation import Translator
+from langdetect import detect
 
 translator = Translator()
 client = discord.Client()
@@ -13,8 +14,11 @@ def getConfig():
     FileNotFoundError: "Please provide a config.json"
 
 async def translate(message):
+
     # if the message is in a normie language, ignore the message
-  if translator.detect(message.content).lang != 'ja':
+  lang = detect(message.content)
+  print(lang)
+  if lang != 'ja':
     return
 
   # get an english translation
@@ -44,7 +48,7 @@ async def on_message(message):
     return
 
   # if the message is not in a designated channel or server, ignore the message
-  if message.channel.id not in getConfig()["bound_channels"] or message.guild.id not in getConfig()["bound_servers"]:
+  if not (message.channel.id in getConfig()["bound_channels"] or message.guild.id in getConfig()["bound_servers"]):
     return
 
   if(message.content.startswith("?kanji")):
