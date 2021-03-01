@@ -27,7 +27,7 @@ async def translate(message):
 
 async def help(message):
   await message.channel.send(
-    "🎶 `かんな〜ちゃん v0.1` 🎶\n\n"+
+    "🎶 `かんな〜ちゃん v0.2` 🎶\n\n"+
     "`?kanji []` -> enter a single kanji, get its RTK index page."
   )
 
@@ -43,8 +43,8 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  # if the message is not in a designated channel, ignore the message
-  if message.channel.id not in getConfig()["bound_channels"]:
+  # if the message is not in a designated channel or server, ignore the message
+  if message.channel.id not in getConfig()["bound_channels"] or message.guild.id not in getConfig()["bound_servers"]:
     return
 
   if(message.content.startswith("?kanji")):
@@ -58,8 +58,6 @@ async def on_message(message):
   # catch all for things that are def. commands, but I do not recognize
   if message.content.startswith("?"):
     await message.channel.send("Unknown Command :thinking:")
-
-
 
   await translate(message)
 

@@ -2,5 +2,8 @@
   "token": "YOURTOKENHERE",
   "bound_channels":[
     1234567890
+  ],
+  "bound_servers":[
+    845710925109569
   ]
 }
