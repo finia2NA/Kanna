@@ -22,7 +22,8 @@ async def translate(message):
     return
 
   # get an english translation
-  trans = translator.translate(message.content).text
+  # FIXME: remove 。 substitution workaround when fixed in pygoogletranslate library
+  trans = translator.translate(message.content.replace("。", ".")).text
 
   # get romaji
   romaji = translator.translate(message.content, dest='ja').pronunciation
