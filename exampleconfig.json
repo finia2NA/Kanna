@@ -1,5 +1,6 @@
 {
   "token": "YOURTOKENHERE",
+  "prefix": "?",
   "bound_channels":[
     1234567890
   ],
